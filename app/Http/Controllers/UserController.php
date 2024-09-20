@@ -36,17 +36,36 @@ class UserController extends Controller
 	     UserModel::create($data);*/
 
         //Langkah 5
-        $data = [ 
+        /*$data = [ 
             'level_id' => 2, 
             'username' => 'manager_tiga', 
             'nama' => 'Manager 3', 
             'password' => Hash::make('12345') 
         ]; 
-            UserModel::create($data) ; 
-
-
+            UserModel::create($data) ;*/
+        
         // coba akses model UserModel 
-        $user = UserModel::all(); // ambil semua data dari tabel m_user 
+        /*$user = UserModel::all(); // ambil semua data dari tabel m_user 
+        return view('user', ['data' => $user]); */
+
+        //JS4 Praktikum 2.1
+        //Langkah 1
+        /*$user = UserModel::find(1);  
+        return view('user', ['data' => $user]);*/
+
+        //Langkah 4
+        /*$user = UserModel::where('level_id', 1)->first();  
+        return view('user', ['data' => $user]);*/
+
+        //Langkah 6
+        /*$user = UserModel::firstwhere('level_id', 1);  
+        return view('user', ['data' => $user]);*/
+
+        //Langkah 8
+        $user = UserModel :: findOr(20, ['username', 'nama'], function () { 
+            abort(404); 
+        }); 
         return view('user', ['data' => $user]); 
+
     }
 }
