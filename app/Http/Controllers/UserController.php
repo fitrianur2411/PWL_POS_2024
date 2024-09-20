@@ -83,8 +83,65 @@ class UserController extends Controller
         return view('user', ['data' => $user]);*/
         
         //Langkah 3
-        $user = UserModel::where('level_id', 2)->count(); 
-        return view('user', ['data' => $user]); 
+        /*$user = UserModel::where('level_id', 2)->count(); 
+        return view('user', ['data' => $user]);*/
+        
+        //JS4 Praktikum 2.4
+        //Langkah 1
+        /*$user = UserModel :: firstOrCreate( 
+            [ 
+                'username' => 'manager', 
+                'nama' => 'Manager', 
+            ], 
+        ); 
+        
+        return view('user', ['data' => $user]);*/
 
+        //Langkah 4
+        /*$user = UserModel :: firstOrCreate( 
+            [ 
+                'username' => 'manager22', 
+                'nama' => 'Manager Dua Dua', 
+                'password' => Hash::make('12345'), 
+                'level_id' => 2 
+            ], 
+        ); 
+        
+        return view('user', ['data' => $user]);*/
+        
+        //Langkah 6
+        /*$user = UserModel :: firstOrNew( 
+            [ 
+                'username' => 'manager', 
+                'nama' => 'Manager', 
+            ], 
+        ); 
+        
+        return view('user', ['data' => $user]); */
+
+        //Langkah 8
+        /*$user = UserModel::firstOrNew( 
+            [ 
+                'username' => 'manager33', 
+                'nama' => 'Manager Tiga Tiga', 
+                'password' => Hash::make('12345'), 
+                'level_id' => 2 
+            ], 
+        ); 
+ 
+        return view('user', ['data' => $user]); */
+
+        //Langkah 10
+        $user = UserModel::firstOrNew( 
+            [ 
+                'username' => 'manager33', 
+                'nama' => 'Manager Tiga Tiga', 
+                'password' => Hash::make('12345'), 
+                'level_id' => 2 
+            ], 
+        ); 
+        $user->save(); 
+ 
+        return view('user', ['data' => $user]);
     }
 }
