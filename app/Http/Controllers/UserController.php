@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
-    {
+    // public function index()
+    // {
         // tambah data user dengan Eloquent Model 
         
         /*$data = [ 
@@ -191,9 +191,9 @@ class UserController extends Controller
             dd($user->wasChanged(['nama', 'username'])); // true */
 
         //JS4 Praktikum 2.6
-        $user = UserModel::all();
-        return view('user',['data'=> $user]);
-    }
+    //     $user = UserModel::all();
+    //     return view('user',['data'=> $user]);
+    // }
         public function tambah()
         {
             return view('user_tambah');
@@ -241,4 +241,11 @@ class UserController extends Controller
         return redirect('/user');
     }
 
+    //JS4 Praktikum 2.7
+    public function index() 
+    { 
+        $user = UserModel::with('level')->get(); 
+        //dd($user); 
+        return view('user', ['data' => $user]);
+    }
 }
