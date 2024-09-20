@@ -62,10 +62,19 @@ class UserController extends Controller
         return view('user', ['data' => $user]);*/
 
         //Langkah 8
-        $user = UserModel :: findOr(20, ['username', 'nama'], function () { 
+        /*$user = UserModel :: findOr(20, ['username', 'nama'], function () { 
             abort(404); 
         }); 
-        return view('user', ['data' => $user]); 
+        return view('user', ['data' => $user]);*/
+        
+        //JS4 Praktikum 2.2
+        //Langkah 1
+        /*$user = UserModel :: findOrFail(1); 
+        return view('user', ['data' => $user]);*/
+
+        //Langkah 3
+        $user = UserModel::where('username', 'manager9')->firstOrFail(); 
+        return view('user', ['data' => $user]);
 
     }
 }
