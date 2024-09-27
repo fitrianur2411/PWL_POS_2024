@@ -10,6 +10,6 @@
     <div class="card-body">
         Selamat datang semua, ini adalah halaman utama dari aplikasi ini.
     </div>
-    </div>
+</div>
     
 @endsection
