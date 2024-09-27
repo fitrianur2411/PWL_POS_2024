@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\LevelModel;
 use Yajra\DataTables\Facades\DataTables;
+
 
 class UserController extends Controller
 {
@@ -24,7 +26,9 @@ class UserController extends Controller
 
         $activeMenu = 'user'; //set menu yang sedang aktif
 
-        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        $level = LevelModel::all(); // ambil data level untuk filter level
+        
+        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page,'level' => $level, 'activeMenu' => $activeMenu]);
     }
 
     public function list(Request $request)
@@ -32,6 +36,10 @@ class UserController extends Controller
         $users = UserModel::select('user_id', 'username', 'nama', 'level_id')
             ->with('level');
 
+        //filter daata user berdasarkan level_id
+        if($request->level_id) {
+            $users->where('level_id', $request->level_id);
+        }
         return DataTables::of($users)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addColumn('aksi', function ($user) { // menambahkan kolom aksi
