@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\barangcontroller;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,4 +56,15 @@ Route::group(['prefix' => 'level'], function(){
     Route::get('/{id}/edit', [LevelController::class, 'edit']); // Menampilkan halaman form edit level
     Route::put('/{id}', [LevelController::class, 'update']);    // Menyimpan perubahan data level
     Route::delete('/{id}', [LevelController::class, 'destroy']);// Menghapus data level
+});
+
+Route::group(['prefix' => 'barang'], function(){
+    Route::get('/', [BarangController::class, 'index']);         // Menampilkan halaman awal Barang
+    Route::post('/list', [BarangController::class, 'list']);     // Menampilkan data Barang dalam bentuk jeson untuk datatables
+    Route::get('/create', [BarangController::class, 'create']);  // Menampilkan halaman form tambah Barang
+    Route::post('/', [BarangController::class, 'store']);        // Menyimpan data Barang baru
+    Route::get('/{id}', [BarangController::class, 'show']);      // Menampilkan detail Barang
+    Route::get('/{id}/edit', [BarangController::class, 'edit']); // Menampilkan halaman form edit Barang
+    Route::put('/{id}', [BarangController::class, 'update']);    // Menyimpan perubahan data Barang
+    Route::delete('/{id}', [BarangController::class, 'destroy']);// Menghapus data Barang
 });
