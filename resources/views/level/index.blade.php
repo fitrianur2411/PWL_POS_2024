@@ -1,11 +1,14 @@
 @extends('layouts.template')
 
 @section('content')
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
+    data-keyboard="false" data-width="75%" aria-hidden="true"></div>
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
                 <a class="btn btn-sm btn-primary mt-1" href="{{ url('level/create') }}">Tambah</a>
+                <button onclick="modalAction('{{ url('level/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
             </div>
         </div>
         <div class="card-body">
@@ -19,6 +22,7 @@
                 <thead>
                     <tr>
                         <th >ID</th>
+                        <th >Kode</th>
                         <th >Nama</th>
                         <th >Aksi</th>
                     </tr>
@@ -33,6 +37,12 @@
 
 @push('js')
     <script>
+        function modalAction(url = '') {
+            $('#myModal').load(url, function() {
+                $('#myModal').modal('show');
+            });
+        }
+        var dataLevel;
         $(document).ready(function() {
             var dataUser = $('#table_user').DataTable({
                 serverSide: true,
@@ -40,9 +50,9 @@
                     "url": "{{ url('level/list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function (d){
-                        d.level_id = $('#level_id').val();
-                    }
+                    // "data": function (d){
+                    //     d.level_id = $('#level_id').val();
+                    // }
                 },
                 columns: [{
                     // nomor urut dari laravel datatable addIndexColumn()
@@ -50,6 +60,13 @@
                     className: "text-center",
                     orderable: false,
                     searchable: false
+                }, {
+                    data: "level_kode",
+                    className: "",
+                    // orderable: true, jika ingin kolom ini bisa diurutkan
+                    orderable: true,
+                    // searchable: true, jika ingin kolom ini bisa dicari
+                    searchable: true
                 }, {
                     data: "level_nama",
                     className: "",
