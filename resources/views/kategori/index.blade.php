@@ -1,11 +1,15 @@
 @extends('layouts.template')
 
 @section('content')
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
+    data-keyboard="false" data-width="75%" aria-hidden="true"></div>
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
                 <a class="btn btn-sm btn-primary mt-1" href="{{ url('kategori/create') }}">Tambah</a>
+                <button onclick="modalAction('{{ url('/kategori/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah
+                    Ajax</button>
             </div>
         </div>
         <div class="card-body">
@@ -19,6 +23,7 @@
                 <thead>
                     <tr>
                         <th >ID</th>
+                        <th >Kode</th>
                         <th >Nama Kategori</th>
                         <th >Aksi</th>
                     </tr>
@@ -33,6 +38,11 @@
 
 @push('js')
     <script>
+        function modalAction(url = '') {
+            $('#myModal').load(url, function() {
+                $('#myModal').modal('show');
+            });
+        }
         $(document).ready(function() {
             var dataUser = $('#table_user').DataTable({
                 // serverSide: true, jika ingin menggunakan server side processing
@@ -41,9 +51,9 @@
                     "url": "{{ url('kategori/list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function (d){
-                        d.kategori_id = $('#kategori_id').val();
-                    }
+                    // "data": function (d){
+                    //     d.kategori_id = $('#kategori_id').val();
+                    // }
                 },
                 columns: [{
                     // nomor urut dari laravel datatable addIndexColumn()
@@ -51,6 +61,13 @@
                     className: "text-center",
                     orderable: false,
                     searchable: false
+                }, {
+                    data: "kategori_kode",
+                    className: "",
+                    // orderable: true, jika ingin kolom ini bisa diurutkan
+                    orderable: true,
+                    // searchable: true, jika ingin kolom ini bisa dicari
+                    searchable: true
                 }, {
                     data: "kategori_nama",
                     className: "",
