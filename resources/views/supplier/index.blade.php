@@ -1,11 +1,14 @@
 @extends('layouts.template')
 
 @section('content')
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
+    data-keyboard="false" data-width="75%" aria-hidden="true"></div>
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
                 <a class="btn btn-sm btn-primary mt-1" href="{{ url('supplier/create') }}">Tambah</a>
+                <button onclick="modalAction('{{ url('/supplier/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
             </div>
         </div>
         <div class="card-body">
@@ -15,12 +18,14 @@
             @if (session('error'))
                 <div class="alert alert-danger">{{session('error')}}</div>
             @endif
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_user">
+            {{-- <table class="table table-bordered table-striped table-hover table-sm" id="table_supplier"> --}}
+                <table class="table table-bordered table-striped table-hover table-sm" id="table_supplier">
                 <thead>
                     <tr>
                         <th >ID</th>
                         <th >Kode Supplier</th>
                         <th >Nama Supplier</th>
+                        <th >Alamat Supplier</th>
                         <th >Aksi</th>
                     </tr>
                 </thead>
@@ -34,8 +39,13 @@
 
 @push('js')
 <script>
+    function modalAction(url = '') {
+            $('#myModal').load(url, function() {
+                $('#myModal').modal('show');
+            });
+        }
     $(document).ready(function() {
-        var dataUser = $('#table_user').DataTable({
+        var dataUser = $('#table_supplier').DataTable({
             serverSide: true,
             ajax: {
                 "url": "{{ url('supplier/list') }}",
@@ -62,6 +72,11 @@
                     orderable: true,
                     searchable: true
                 },{
+                    data: "supplier_alamat",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }, {
                     data: "aksi",
                     className: "",
                     orderable: false,
