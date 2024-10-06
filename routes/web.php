@@ -76,9 +76,15 @@ Route::group(['prefix' => 'barang'], function(){
     Route::post('/list', [BarangController::class, 'list']);     // Menampilkan data Barang dalam bentuk jeson untuk datatables
     Route::get('/create', [BarangController::class, 'create']);  // Menampilkan halaman form tambah Barang
     Route::post('/', [BarangController::class, 'store']);        // Menyimpan data Barang baru
+    Route::get('/create_ajax', [BarangController::class, 'create_ajax']);   // menampilkan halaman form tambah barang
+    Route::post('/ajax', [BarangController::class, 'store_ajax']);         // menyimpan data barang baru
     Route::get('/{id}', [BarangController::class, 'show']);      // Menampilkan detail Barang
     Route::get('/{id}/edit', [BarangController::class, 'edit']); // Menampilkan halaman form edit Barang
     Route::put('/{id}', [BarangController::class, 'update']);    // Menyimpan perubahan data Barang
+    Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax']); // menampilkan halaman form edit supplier ajax
+    Route::put('/{id}/update_ajax', [BarangController::class, 'update_ajax']); // menyimpan perubahan data supplier ajax
+    Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // menampilkan form confirm delete supplier ajax
+    Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // menghapus data supplier ajax
     Route::delete('/{id}', [BarangController::class, 'destroy']);// Menghapus data Barang
 });
 
