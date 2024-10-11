@@ -74,7 +74,6 @@
             <p>Transaksi Penjualan</p>
           </a>
         </li>
-        <br><br><br><br><br><br><br>
            <!-- Button Logout -->
             <li class="nav-item">
                 <a href="{{ url('/logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
