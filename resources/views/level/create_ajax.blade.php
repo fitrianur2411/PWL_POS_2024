@@ -27,7 +27,7 @@
 </form>
 <script>
     $(document).ready(function() {
-        $("#form-tambah").validate({
+        $("#form-tambah-level").validate({
             rules: {
                 level_kode: {
                     required: true,
@@ -59,10 +59,11 @@
                             $.each(response.msgField, function(prefix, val) {
                                 $('#error-' + prefix).text(val[0]);
                             });
+                            console.log(xhr.responseText);
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Terjadi Kesalahan',
-                                text: response.message
+                                text: 'Kesalahan di server: ' + xhr.responseText
                             });
                         }
                     }
