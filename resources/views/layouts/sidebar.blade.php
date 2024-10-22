@@ -81,7 +81,7 @@
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>Logout</p>
             </a>
-            <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ url('logout') }}" method="GET" style="display: none;">
               @csrf
             </form>
           </li>

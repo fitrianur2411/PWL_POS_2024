@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\BarangController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -160,4 +162,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/stok/{id}/delete_ajax', [StokController::class, 'delete_ajax']);
         Route::delete('/stok/{id}', [StokController::class, 'destroy']); // menghapus data stok
     });
+
+    Route::get('/profil', [ProfilController::class, 'index']);
+    Route::post('/profil/update', [ProfilController::class, 'update']);
 });
