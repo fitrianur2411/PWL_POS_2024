@@ -21,18 +21,16 @@ class StokModel extends Model
         'stok_jumlah',
     ];
     public function supplier(): BelongsTo
-    {
-        return $this->belongsTo(SupplierModel::class, 'supplier_id', 'supplier_id');
-    }
-    
+{
+    return $this->belongsTo(SupplierModel::class, 'supplier_id', 'supplier_id');
+}
     public function barang(): BelongsTo
-    {
-        return $this->belongsTo(BarangModel::class, 'barang_id', 'barang_id');
-    }
-    
+{
+    return $this->belongsTo(BarangModel::class, 'barang_id', 'barang_id');
+}
     public function user(): BelongsTo
-    {
-        return $this->belongsTo(UserModel::class, 'user_id', 'user_id');
-    }
+{
+    return $this->belongsTo(UserModel::class, 'user_id', 'user_id');
+}
 
 }

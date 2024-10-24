@@ -29,9 +29,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @if (auth()->check())
-                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                @endif
+                    <input type="hidden" name="user_id" value="{{ auth()->id() }}"> 
                     <div class="form-group">
                         <label>Barang</label>
                         <select name="barang_id" id="barang_id" class="form-control" required>
