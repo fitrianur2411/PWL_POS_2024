@@ -229,10 +229,14 @@ class BarangController extends Controller
         return redirect('/');
     }
 
-    public function show_ajax(string $id)
+    public function show_ajax(Request $request, string $id)
     {
-        $barang = BarangModel::with('kategori')->find($id);
-        return view('barang.show_ajax', ['barang' => $barang]);
+        $barang = BarangModel::find($id);
+
+        if (!$barang) {
+            return response()->json(['status' => false, 'message' => 'barang not found'], 404);
+        }
+        return view('barang.show_ajax', compact('barang'));
     }
 
     // Show form for editing Barang via AJAX
