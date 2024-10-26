@@ -82,25 +82,25 @@
                 }, {
                     data: "username",
                     className: "",
-                    width: "5%",
+                    width: "",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "nama",
                     className: "",
-                    width: "15%",
+                    width: "",
                     orderable: true,
                     searchable: true,
                 }, {
                     data: "level.level_nama",
                     className: "",
-                    width: "10%",
+                    width: "",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "aksi",
                     className: "text-center",
-                    width: "5%",
+                    width: "",
                     orderable: false,
                     searchable: false
                 }]
