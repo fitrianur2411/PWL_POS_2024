@@ -100,6 +100,8 @@ class PenjualanController extends Controller
         return view('penjualan.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'penjualan' => $penjualan, 'activeMenu' => $activeMenu]);
     }
 
+
+
     public function edit(string $id)
     {
         $penjualan = PenjualanModel::find($id);
@@ -168,15 +170,15 @@ class PenjualanController extends Controller
     {
         // Mengambil data penjualan berdasarkan id
         $penjualan = PenjualanModel::findOrFail($id);
+        $users = UserModel::find($penjualan->user_id);
 
         // Mengambil detail penjualan berdasarkan penjualan_id
         $details = DetailModel::where('penjualan_id', $id)->with('barang')->get();
 
-        // $barangs = BarangModel::find($details->barang_id);
         // Mengirimkan data ke view untuk di-load menggunakan DataTables
         return view('penjualan.show_ajax', [
             'penjualan' => $penjualan,
-            // 'barangs' => $barangs,
+            'users' => $users,
             'details' => $details
         ]);
     }

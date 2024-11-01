@@ -77,40 +77,38 @@
 <body>
     <table class="border-bottom-header">
         <tr>
-            <td width="15%" class="text-center"><img src="{{ asset('polinema-bw.png') }}"></td>
+            <td width="15%" class="text-center">
+                <img src="{{ asset('polinema.png') }}" alt="Logo" style="max-height: 80px; width: auto;"> 
+            </td>
             <td width="85%">
-                <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN
-                    PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
-                <span class="text-center d-block font-13 font-bold mb-1">POLITEKNIK NEGERI
-                    MALANG</span>
-                <span class="text-center d-block font-10">Jl. Soekarno-Hatta No. 9 Malang
-                    65141</span>
-                <span class="text-center d-block font-10">Telepon (0341) 404424 Pes. 101-
-                    105, 0341-404420, Fax. (0341) 404420</span>
+                <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</span>
+                <span class="text-center d-block font-13 font-bold mb-1">POLITEKNIK NEGERI MALANG</span>
+                <span class="text-center d-block font-10">Jl. Soekarno-Hatta No. 9 Malang 65141</span>
+                <span class="text-center d-block font-10">Telepon (0341) 404424 Pes. 101-105, 0341-404420, Fax. (0341) 404420</span>
                 <span class="text-center d-block font-10">Laman: www.polinema.ac.id</span>
             </td>
         </tr>
     </table>
-    <h3 class="text-center">LAPORAN DATA DETAIL PENJUALAN</h4>
+    <h3 class="text-center">LAPORAN DATA DETAIL KATEGORI</h4>
         <table class="border-all">
             <thead>
                 <tr>
                     <th class="text-center">No</th>
-                    <th>Penjualan ID</th>
-                    <th>Nama Barang</th>
+                    <th>Kode Transaksi</th>
+                    <th>Barang</th>
                     <th>Harga</th>
-                    <th class="text-right">Jumlah</th>
+                    <th>Jumlah</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($detail as $b)
-                    <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $b->penjualan->penjualan_id }}</td>
-                        <td>{{ $b->barang->barang_nama }}</td>
-                        <td>{{ $b->harga }}</td>
-                        <td class="text-right">{{ $b->jumlah }}</td>
-                    </tr>
+                @foreach($detail as $d)
+                <tr>
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td>{{ $d->penjualan->penjualan_kode }}</td>
+                    <td>{{ $d->barang->barang_nama }}</td>
+                    <td>{{ $d->harga }}</td>
+                    <td>{{ $d->jumlah }}</td>
+                </tr>
                 @endforeach
             </tbody>
         </table>

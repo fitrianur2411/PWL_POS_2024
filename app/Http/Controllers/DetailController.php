@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\BarangModel;
 use App\Models\DetailModel;
 use App\Models\PenjualanModel;
@@ -10,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yajra\DataTables\Facades\DataTables;
-
 class DetailController extends Controller
 {
     public function index()
@@ -35,30 +32,26 @@ class DetailController extends Controller
             'page'=> $page
         ]);
     }
-
     public function list(Request $request)
     {
         $detail = DetailModel::select('detail_id', 'penjualan_id', 'barang_id', 'harga', 'jumlah')
             ->with('barang')
             ->with('penjualan');
-
         if ($request->barang_id) {
             $detail->where('barang_id', $request->barang_id);
         }
-
         return DataTables::of($detail)
-            ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex) 
-            ->addColumn('aksi', function ($detail) { // menambahkan kolom aksi 
-                $btn = '<a href="' . url('/detail/' . $detail->detail_id) . '" class="btn btn-info btn-sm">Detail</a> ';
-                // $btn .= '<button onclick="modalAction(\'' . url('/detail/' . $detail->detail_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<a onclick="modalAction(\'' . url('/detail/' . $detail->detail_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</a> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/detail/' . $detail->detail_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
-                return $btn;
-            })
-            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html 
-            ->make(true);
+        ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex) 
+        ->addColumn('aksi', function ($detail) { // menambahkan kolom aksi 
+            // $btn = '<a href="' . url('/level/' . $level->level_id) . '" class="btn btn-info btn-sm">Detail</a> '; //tidak menggunakan ajax
+            $btn = '<button onclick="modalAction(\'' . url('/detail/' . $detail->detail_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> '; //menggunakan ajax
+            $btn .= '<button onclick="modalAction(\'' . url('/detail/' . $detail->detail_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+            $btn .= '<button onclick="modalAction(\'' . url('/detail/' . $detail->detail_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+            return $btn;
+        })
+        ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html 
+        ->make(true); 
     }
-
     public function show(string $id)
     {
         $detail = DetailModel::with('barang')->find($id);
@@ -68,6 +61,19 @@ class DetailController extends Controller
         return view('detail.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'activeMenu' => $activeMenu]);
     }
 
+    public function show_ajax(string $id)
+    {
+        $detail = DetailModel::find($id);
+
+        if (!$detail) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data level tidak ditemukan'
+            ]);
+        }
+
+        return view('detail.show_ajax', ['detail' => $detail]);
+    }
     public function create_ajax()
     {
         $barang = BarangModel::select('barang_id', 'barang_nama')->get();
@@ -76,7 +82,6 @@ class DetailController extends Controller
             ->with('barang', $barang)
             ->with('penjualan', $penjualan);
     }
-
     public function store_ajax(Request $request)
     {
         // cek apakah request berupa ajax
@@ -104,7 +109,6 @@ class DetailController extends Controller
         }
         redirect('/');
     }
-
     public function edit_ajax(string $id)
     {
         $detail = DetailModel::find($id);
@@ -112,7 +116,6 @@ class DetailController extends Controller
         $penjualan = PenjualanModel::select('penjualan_id', 'penjualan_kode')->get();
         return view('detail.edit_ajax', ['detail' => $detail, 'barang' => $barang, 'penjualan' => $penjualan]);
     }
-
     public function update_ajax(Request $request, $id)
     {
         // cek apakah request dari ajax
@@ -148,13 +151,11 @@ class DetailController extends Controller
         }
         return redirect('/');
     }
-
     public function confirm_ajax(string $id)
     {
         $detail = DetailModel::find($id);
         return view('detail.confirm_ajax', ['detail' => $detail]);
     }
-
     public function delete_ajax(Request $request, $id)
     {
         // cek apakah request dari ajax
@@ -175,12 +176,10 @@ class DetailController extends Controller
         }
         return redirect('/');
     }
-
     public function import()
     {
         return view('detail.import');
     }
-
     public function import_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
@@ -232,7 +231,6 @@ class DetailController extends Controller
         }
         return redirect('/');
     }
-
     public function export_excel()
     {
         // ambil data barang yang akan di export
@@ -240,7 +238,6 @@ class DetailController extends Controller
             ->orderBy('detail_id')
             ->with('barang')
             ->get();
-
         // load library excel
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet(); // ambil sheet yang aktif
@@ -249,9 +246,7 @@ class DetailController extends Controller
         $sheet->setCellValue('C1', 'Nama Barang');
         $sheet->setCellValue('D1', 'Harga');
         $sheet->setCellValue('E1', 'Jumlah');
-
         $sheet->getStyle('A1:E1')->getFont()->setBold(true); // bold header
-
         $no = 1; // nomor data dimulai dari 1
         $baris = 2; // baris data dimulai dari baris ke 2
         foreach ($detail as $key => $value) {
@@ -263,11 +258,9 @@ class DetailController extends Controller
             $baris++;
             $no++;
         }
-
         foreach (range('A', 'E') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true); // set auto size untuk kolom
         }
-
         $sheet->setTitle('Data Detail Penjualan'); // set title sheet
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $filename = 'Data detail Penjualan ' . date('Y-m-d H:i:s') . '.xlsx';
@@ -282,7 +275,6 @@ class DetailController extends Controller
         $writer->save('php://output');
         exit;
     } // end function export_excel
-
     public function export_pdf()
     {
         $detail = DetailModel::select('detail_id', 'penjualan_id', 'barang_id', 'harga', 'jumlah')
